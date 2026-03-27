@@ -10,8 +10,21 @@
   </style>
   <script>
     const url = new URLSearchParams(window.location.search).get('url');
+    const webUrl = new URLSearchParams(window.location.search).get('web');
+    
     if (url) {
-      window.location.href = url;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = url;
+      } else if (webUrl) {
+        window.location.href = webUrl;
+      } else {
+        // 카카오맵 딥링크 → 웹 URL 변환 시도
+        const kakaoMatch = url.match(/kakaomap:\/\/route\?sp=([\d.]+),([\d.]+)&ep=([\d.]+),([\d.]+)/);
+        if (kakaoMatch) {
+          window.location.href = `https://map.kakao.com/link/from/출발지,${kakaoMatch[1]},${kakaoMatch[2]}/to/도착지,${kakaoMatch[3]},${kakaoMatch[4]}`;
+        }
+      }
     }
   </script>
 </head>
@@ -24,7 +37,7 @@
       document.write('<p>Redirecting...</p>');
       document.write('<p><a href="' + url + '">Click here if not redirected</a></p>');
     } else {
-      document.write('<p>Usage: <code>?url=your-deeplink</code></p>');
+      document.write('<p>Usage: <code>?url=deeplink&web=fallback</code></p>');
     }
   </script>
 </body>
