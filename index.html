@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; padding: 20px; text-align: center; }
+    a { color: #007aff; }
+  </style>
+  <script>
+    const url = new URLSearchParams(window.location.search).get('url');
+    if (url) {
+      window.location.href = url;
+    }
+  </script>
+</head>
+<body>
+  <h1>🔗 Open</h1>
+  <p>Deep link redirector</p>
+  <script>
+    const url = new URLSearchParams(window.location.search).get('url');
+    if (url) {
+      document.write('<p>Redirecting...</p>');
+      document.write('<p><a href="' + url + '">Click here if not redirected</a></p>');
+    } else {
+      document.write('<p>Usage: <code>?url=your-deeplink</code></p>');
+    }
+  </script>
+</body>
+</html>
